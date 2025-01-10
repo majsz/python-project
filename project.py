@@ -14,7 +14,7 @@ Literatura: T.H. Cormen, C.E. Leiserson, R.L. Rivest, "Wprowadzenie do algorytm�
 class CialoNiebieskie():
     def __init__(self, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
         self.nazwa = nazwa
-        self.odlegloscarkoar = odleglosc
+        self.odleglosc = odleglosc
         self.masa = masa
         self.okresObiegu = okresObiegu
         self.next = None
@@ -46,7 +46,7 @@ class List():
         counter=self.head
         print(counter.nazwa)
         while counter.next!=None:
-              print(counter.next.nazwa + counter.next.odleglosc)
+              print(f"Nazwa: {counter.nazwa}, Odległość: {counter.odleglosc}, Masa: {counter.masa}, Okres obiegu: {counter.okresObiegu}")
               counter = counter.next
               
     def length(self):
@@ -59,9 +59,12 @@ class List():
             output +=1
         return output
     
-    def remove(self, node):
+    def remove(self, node): # zmieniamy na removeByName albo removeByPosition?
         counter=self.head
-        while counter.next!=None or counter.next != node:
+        if counter == node:
+            self.head = counter.next
+            return
+        while counter.next!=None and counter.next != node:
             counter = counter.next
         if (counter.next == None):
             print("Brak ciała niebieskiego w układzie słonecznym")
@@ -72,15 +75,25 @@ class List():
         EDYTOWANIE - jak ma wygladac? czy mozna lista.edit(planeta, ...wszystkie dane..)
         czy np bierze liczbe - pozycje na liscie i tylko ją edytuje?
         '''
-    def edit(self, planeta, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
+    def editByName(self, nazwaObiektu, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
         counter = self.head
         while counter is not None:  
-            if counter == planeta:  
+            if counter.nazwa == nazwaObiektu:  
                 counter.edit(nazwa, odleglosc, masa, okresObiegu)
                 return
             counter = counter.next
         print("Brak ciała niebieskiego w układzie słonecznym")
-
+        
+    def editByPosition(self, pozycja, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
+        i = 0
+        counter = self.head
+        while counter is not None:  
+            if i == pozycja:  
+                counter.edit(nazwa, odleglosc, masa, okresObiegu)
+                return
+            counter = counter.next
+            i+=1
+        print("Brak ciała niebieskiego w układzie słonecznym")
 
 
 lista = List()
