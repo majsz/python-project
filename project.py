@@ -70,17 +70,116 @@ class UkladSloneczny():
         
 '''
 ALGORYTMY SORTOWANIA - BUCKET SORT
+
+dana - określa według której wartości obiektu CiałoNiebieskie sortujemy obiekty UkładuSłonecznego
 '''
+# rosnąco
+def insertionSort(arr, dana):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and dana(key) < dana(arr[j]):
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+
+def bucketSort(arr, dana):
+    noOfbuckets = max(1, int(len(arr) / 2))  
+
+    temp = []
+    max_ele = max(arr, key=dana)
+    min_ele = min(arr, key=dana)
+
+    max_val = dana(max_ele)
+    min_val = dana(min_ele)
+    rnge = (max_val - min_val) / noOfbuckets
+
+    for i in range(noOfbuckets):
+        temp.append([])
+
+    for i in range(len(arr)):
+        index = int((dana(arr[i]) - min_val) / rnge)
+        if index >= noOfbuckets:  
+            index = noOfbuckets - 1
+        temp[index].append(arr[i])
+
+    for i in range(noOfbuckets):
+        temp[i] = insertionSort(temp[i], dana)
+
+    k = 0
+    for i in range(noOfbuckets):
+        for j in range(len(temp[i])):
+            arr[k] = temp[i][j]
+            k += 1
+
+    return arr
+
+# malejąco
+def bucketSortDesc(arr, dana):
+    noOfbuckets = max(1, int(len(arr)))  
+    temp = []
+    max_ele = max(arr, key=dana)
+    min_ele = min(arr, key=dana)
+
+    max_val = dana(max_ele)
+    min_val = dana(min_ele)
+    rnge = (max_val - min_val) / noOfbuckets
+
+    for i in range(noOfbuckets):
+        temp.append([])
+
+    for i in range(len(arr)):
+        index = int((dana(arr[i]) - min_val) / rnge)
+        if index >= noOfbuckets: 
+            index = noOfbuckets - 1
+        temp[index].append(arr[i])
+
+    for i in range(noOfbuckets):
+        temp[i] = insertionSortDesc(temp[i], dana)
+
+    k = 0
+    for i in range(noOfbuckets - 1, -1, -1):
+        for j in range(len(temp[i])):
+            arr[k] = temp[i][j]
+            k += 1
+
+    return arr
+
+def insertionSortDesc(arr, dana):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        # Sortowanie malejące
+        while j >= 0 and dana(key) > dana(arr[j]):
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
 
 
 
 lista = UkladSloneczny()
-lista.add("Słońce", 0,0.2, 0)
-lista.add("Ziemia", 11, 5, 365)
+lista.add("Ziemia", 1, 5.97, 365)
+lista.add("Wenus", 0.72, 4.867, 225)
+lista.add("Jowisz", 5.2, 1898, 4333)
+lista.add("Saturn", 9.58, 568, 10759)
+lista.add("Neptun", 30.05, 102.4, 60190)
+lista.add("Uran", 19.22, 86.8, 30687)
+'''
 lista.display()
 
-lista.edit_by_position(1,masa=123)  
+print("sort masa:")
+bucketSortDesc(lista.objects, dana = lambda obj: obj.masa)
 lista.display()
-#bucket_sort_descending(lista.objects, dana = lambda obj: obj.masa)
+
+print("sort okresObiegu:")
+lista.objects=bucketSortDesc(lista.objects, dana = lambda obj: obj.okresObiegu)
 
 lista.display()
+
+print("sort odleglosc:")
+bucketSortDesc(lista.objects, dana = lambda obj: obj.odleglosc)
+
+lista.display()
+'''
