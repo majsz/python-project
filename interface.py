@@ -96,8 +96,6 @@ def add_object():
         update_display()
     except ValueError:
         error_label.configure(text="Wprowadz dane w odpowiednim formacie")
-    except IndexError:
-        error_label.configure(text="Wprowadz dane w odpowiednim formacie")
 
 add_button = customtkinter.CTkButton(
     master=frame2,
@@ -125,14 +123,24 @@ data_entry_to_remove_by_name = customtkinter.CTkEntry(
 )
 data_entry_to_remove_by_name.grid(row=5, column=0, columnspan=2, padx=8, pady=8)
 
-
+def remove():
+    error_label.configure(text="")  
+    try:
+        doUsuniecia = data_entry_to_remove_by_name.get().strip()
+        listaNazw = [lista[i].nazwa for i in range(len(lista.objects))]
+        if doUsuniecia =="" or doUsuniecia not in listaNazw:
+            error_label.configure(text="Podaj nazwe obiektu z listy Układ Słoneczny")
+            return
+        lista.remove_by_name(doUsuniecia)
+        update_display()
+    except ValueError:
+        error_label.configure(text="Wprowadz dane w odpowiednim formacie")
 delete_button = customtkinter.CTkButton(
     master=frame2,
     text="Usun objekt",
     font=("Arial", 20),
     command=lambda: [
-        error_label.configure(text="Podaj nazwe obiektu z listy Układ Słoneczny") ,
-        lista.remove_by_name(data_entry_to_remove_by_name.get().strip()),
+        remove(),
         update_display()
     ],
     fg_color="#f0c2db",  
