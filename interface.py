@@ -14,15 +14,15 @@ root.grid_columnconfigure(0, weight=1)
 root.grid_columnconfigure(1, weight=1)  
 root.grid_rowconfigure(0, weight=1)
 
-label1 = customtkinter.CTkLabel(frame1, text="Lista ciał niebieskich", text_color="#450945", font=("Arial", 20))
+label1 = customtkinter.CTkLabel(frame1, text="Obiekty w Układzie Słonecznym", text_color="#450945", font=("Arial", 20))
 label1.grid(row=0, column=0, columnspan=2, pady=10, padx=10)
 
-label2 = customtkinter.CTkLabel(frame2, text="Actions", text_color="#450945", font=("Arial", 20))
+label2 = customtkinter.CTkLabel(frame2, text="Działania", text_color="#450945", font=("Arial", 20))
 label2.grid(row=0, column=0, columnspan=2, pady=10, padx=10)
 
 error_label = customtkinter.CTkLabel(frame1, text="", text_color="#fc0324", font=("Arial", 12))
 
-text_label = customtkinter.CTkLabel(frame2, text="Wprowadz dane nowego obiektu:", text_color="#450945", font=("Arial", 16))
+text_label = customtkinter.CTkLabel(frame2, text="Aby dodac nowy obiekt wprowadź dane:", text_color="#450945", font=("Arial", 16))
 text_label.grid(row=1, column=0, columnspan=2, pady=10, padx=10,sticky = "n")
 
 data_entry_name = customtkinter.CTkEntry(
