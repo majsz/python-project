@@ -22,7 +22,7 @@ class CialoNiebieskie():
         self.masa = masa
         self.okresObiegu = okresObiegu
 
-    def edit(self, nazwa, odleglosc, masa, okresObiegu):
+    def edit(self, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
         if nazwa is not None:
             self.nazwa = nazwa
         if odleglosc is not None:
@@ -52,11 +52,11 @@ class UkladSloneczny():
     def remove_by_name(self, nazwa):
         self.objects = [obj for obj in self.objects if obj.nazwa != nazwa]
         
-    def edit_by_name(self, doEdytowania, nazwa, odleglosc, masa, okresObiegu):
+    def edit_by_name(self, doEdytowania, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
         for obj in self.objects:
             if (obj.nazwa == doEdytowania):
-                obj.edit(nazwa, odleglosc, masa, okresObiegu)
-                
+                obj.edit(nazwa, odleglosc, masa, okresObiegu)      
+                         
     def edit_by_position(self, doEdytowania, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
         if doEdytowania < len(self.objects):
             self[doEdytowania].edit(nazwa, odleglosc, masa, okresObiegu)

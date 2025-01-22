@@ -206,22 +206,33 @@ def edit_object():
     error_label.configure(text="")  
     try:
         doEdytowania = data_entry_to_edit_by_name.get().strip()  
-        nazwa = data_entry_name_to_edit.get().strip()
-        odleglosc = float(data_entry_distance_to_edit.get().strip())
-        masa = float(data_entry_masa_to_edit.get().strip())
-        okresObiegu = int(data_entry_okres_to_edit.get().strip())
-        if doEdytowania == "" or nazwa == "" or odleglosc <= 0 or masa <= 0 or okresObiegu < 0:
-            error_label.configure(text="Wprowadz wszystkie dane i poprawne wartości")
+        nazwa = data_entry_name_to_edit.get().strip() or None
+        odleglosc = data_entry_distance_to_edit.get().strip() or None
+        masa = data_entry_masa_to_edit.get().strip() or None
+        okresObiegu = data_entry_okres_to_edit.get().strip() or None
+
+        odleglosc = float(odleglosc) if odleglosc else None
+        masa = float(masa) if masa else None
+        okresObiegu = int(okresObiegu) if okresObiegu else None
+
+        if nazwa is None and odleglosc is None and masa is None and okresObiegu is None:
+            error_label.configure(text="Wprowadz przynajmniej jedną wartość do edycji")
             return
-        for obj in lista.objects:
-            if obj.nazwa == doEdytowania:
-                lista.edit_by_name(doEdytowania, nazwa, odleglosc, masa, okresObiegu)
-                error_label.configure(text="")  
-                update_display()
-                return
-        error_label.configure(text="Obiekt o takiej nazwie nie istnieje")
+        if odleglosc is not None and odleglosc <= 0:
+            error_label.configure(text="Odległość musi być dodatnia")
+            return
+        if masa is not None and masa <= 0:
+            error_label.configure(text="Masa musi być dodatnia")
+            return
+        if okresObiegu is not None and okresObiegu < 0:
+            error_label.configure(text="Okres obiegu musi być nieujemny")
+            return
+        
+        lista.edit_by_name(doEdytowania, nazwa, odleglosc, masa, okresObiegu)
+        update_display()
     except ValueError:
         error_label.configure(text="Wprowadz dane w odpowiednim formacie")
+        
     except IndexError:
         error_label.configure(text="Wprowadz dane w odpowiednim formacie")
 
