@@ -56,13 +56,7 @@ class UkladSloneczny():
         for obj in self.objects:
             if (obj.nazwa == doEdytowania):
                 obj.edit(nazwa, odleglosc, masa, okresObiegu)      
-                         
-    def edit_by_position(self, doEdytowania, nazwa=None, odleglosc=None, masa=None, okresObiegu=None):
-        if doEdytowania < len(self.objects):
-            self[doEdytowania].edit(nazwa, odleglosc, masa, okresObiegu)
-        else:
-            print("Układ Słoneczny nie zawiera tylu elementów")
-                
+      
     def display(self):
         print("Obiekty w Układzie Słonecznym:")
         for obj in self.objects:

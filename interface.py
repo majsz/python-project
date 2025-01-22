@@ -131,7 +131,7 @@ delete_button = customtkinter.CTkButton(
     text="Usun objekt",
     font=("Arial", 20),
     command=lambda: [
-        error_label.configure(text="") ,
+        error_label.configure(text="Podaj nazwe obiektu z listy Układ Słoneczny") ,
         lista.remove_by_name(data_entry_to_remove_by_name.get().strip()),
         update_display()
     ],
@@ -214,9 +214,17 @@ def edit_object():
         odleglosc = float(odleglosc) if odleglosc else None
         masa = float(masa) if masa else None
         okresObiegu = int(okresObiegu) if okresObiegu else None
-
+        
+        listaNazw = [lista[i].nazwa for i in range(len(lista.objects))]
+        if doEdytowania =="" or doEdytowania not in listaNazw:
+            error_label.configure(text="Podaj nazwe obiektu z listy Układ Słoneczny")
+            return
         if nazwa is None and odleglosc is None and masa is None and okresObiegu is None:
             error_label.configure(text="Wprowadz przynajmniej jedną wartość do edycji")
+            return
+        
+        if nazwa is not None and nazwa in listaNazw:
+            error_label.configure(text="Nazwy obiektów nie mogą się powtarzać")
             return
         if odleglosc is not None and odleglosc <= 0:
             error_label.configure(text="Odległość musi być dodatnia")
@@ -227,6 +235,8 @@ def edit_object():
         if okresObiegu is not None and okresObiegu < 0:
             error_label.configure(text="Okres obiegu musi być nieujemny")
             return
+
+        
         
         lista.edit_by_name(doEdytowania, nazwa, odleglosc, masa, okresObiegu)
         update_display()
