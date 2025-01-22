@@ -79,15 +79,21 @@ def insertionSort(arr, dana):
     return arr
 
 def bucketSort(arr, dana):
+    if len(arr) < 2:
+        return
     noOfbuckets = max(1, int(len(arr) / 2))  
 
     temp = []
-    max_ele = max(arr, key=dana)
-    min_ele = min(arr, key=dana)
-
-    max_val = dana(max_ele)
-    min_val = dana(min_ele)
-    rnge = (max_val - min_val) / noOfbuckets
+    max_val = dana(arr[0])
+    min_val = dana(arr[0])
+    for i in arr:
+        if dana(i) > max_val:
+            max_val = dana(i)
+    for i in arr:
+        if dana(i) < min_val:
+            min_val = dana(i)
+            
+    rnge = max((max_val - min_val) / noOfbuckets, 1)
 
     for i in range(noOfbuckets):
         temp.append([])
@@ -111,14 +117,20 @@ def bucketSort(arr, dana):
 
 # malejąco
 def bucketSortDesc(arr, dana):
+    if len(arr) < 2:
+        return
     noOfbuckets = max(1, int(len(arr)))  
     temp = []
-    max_ele = max(arr, key=dana)
-    min_ele = min(arr, key=dana)
-
-    max_val = dana(max_ele)
-    min_val = dana(min_ele)
-    rnge = (max_val - min_val) / noOfbuckets
+    max_val = dana(arr[0])
+    min_val = dana(arr[0])
+    for i in arr:
+        if dana(i) > max_val:
+            max_val = dana(i)
+    for i in arr:
+        if dana(i) < min_val:
+            min_val = dana(i)
+            
+    rnge = max((max_val - min_val) / noOfbuckets, 1)
 
     for i in range(noOfbuckets):
         temp.append([])
